@@ -1,0 +1,51 @@
+From d6d0f589fd47eb727bd5ae2518ce50d58cf6aeaa Mon Sep 17 00:00:00 2001
+From: Yassine HABIB <yassine.habib@thalesgroup.com>
+Date: Wed, 24 Nov 2021 12:16:05 +0100
+Subject: [PATCH] Added FileNodeIterator for OpenCV 4.X to optimize vocabulary
+ loading time
+
+---
+ build/dependencies/src/DBoW2/include/TemplatedVocabulary.h | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/include/DBOW2/TemplatedVocabulary.h b/include/TemplatedVocabulary.h
+index 6d8d6210..7e145944 100644
+--- a/include/DBoW2/TemplatedVocabulary.h
++++ b/include/DBoW2/TemplatedVocabulary.h
+@@ -1473,12 +1473,14 @@ void TemplatedVocabulary<TDescriptor,F>::load(const cv::FileStorage &fs,
+   m_nodes.resize(fn.size() + 1); // +1 to include root
+   m_nodes[0].id = 0;
+ 
+-  for(unsigned int i = 0; i < fn.size(); ++i)
++  unsigned int i = 0;
++  for(cv::FileNodeIterator it = fn.begin(); it != fn.end(); it++, i++)
+   {
+-    NodeId nid = (int)fn[i]["nodeId"];
+-    NodeId pid = (int)fn[i]["parentId"];
+-    WordValue weight = (WordValue)fn[i]["weight"];
+-    std::string d = (std::string)fn[i]["descriptor"];
++    cv::FileNode fni =  *it;
++    NodeId nid = (int)fni["nodeId"];
++    NodeId pid = (int)fni["parentId"];
++    WordValue weight = (WordValue)fni["weight"];
++    std::string d = (std::string)fni["descriptor"];
+     
+     m_nodes[nid].id = nid;
+     m_nodes[nid].parent = pid;
+@@ -1493,10 +1495,13 @@ void TemplatedVocabulary<TDescriptor,F>::load(const cv::FileStorage &fs,
+   
+   m_words.resize(fn.size());
+ 
+-  for(unsigned int i = 0; i < fn.size(); ++i)
++  i = 0;
++  for(cv::FileNodeIterator it = fn.begin(); it != fn.end(); it++, i++)
+   {
+-    NodeId wid = (int)fn[i]["wordId"];
+-    NodeId nid = (int)fn[i]["nodeId"];
++    cv::FileNode fni =  *it;
++
++    NodeId wid = (int)fni["wordId"];
++    NodeId nid = (int)fni["nodeId"];
+     
+     m_nodes[nid].word_id = wid;
+     m_words[wid] = &m_nodes[nid];

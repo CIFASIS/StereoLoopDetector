@@ -1,0 +1,30 @@
+From 9a605d571c99099f6f6afc5292c00a84754c5ca2 Mon Sep 17 00:00:00 2001
+From: Matthias Kraft <mk@daedalean.ai>
+Date: Thu, 13 Dec 2018 12:26:30 +0100
+Subject: [PATCH] Fixed assignment operator
+
+---
+ build/dependencies/src/DBoW2/include/DBoW2/TemplatedDatabase.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/DBoW2/TemplatedDatabase.h b/include/DBoW2/TemplatedDatabase.h
+index e0768b0c..f44231b8 100644
+--- a/include/DBoW2/TemplatedDatabase.h
++++ b/include/DBoW2/TemplatedDatabase.h
+@@ -384,12 +384,15 @@ TemplatedDatabase<TDescriptor,F>& TemplatedDatabase<TDescriptor,F>::operator=
+ {
+   if(this != &db)
+   {
++    setVocabulary(*db.m_voc); // The vocabulary must be set before the other
++                              // fields as setVocabulary calls the clear()
++                              // function.
++
+     m_dfile = db.m_dfile;
+     m_dilevels = db.m_dilevels;
+     m_ifile = db.m_ifile;
+     m_nentries = db.m_nentries;
+     m_use_di = db.m_use_di;
+-    setVocabulary(*db.m_voc);
+   }
+   return *this;
+ }

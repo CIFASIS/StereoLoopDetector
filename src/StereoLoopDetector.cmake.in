@@ -1,0 +1,9 @@
+FIND_LIBRARY(StereoLoopDetector_LIBRARY StereoLoopDetector
+    PATHS @CMAKE_INSTALL_PREFIX@/lib
+)
+FIND_PATH(StereoLoopDetector_INCLUDE_DIR StereoLoopDetectorConfig.cmake
+    PATHS @CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME@ 
+)
+SET(StereoLoopDetector_LIBRARIES ${StereoLoopDetector_LIBRARY})
+SET(StereoLoopDetector_LIBS ${StereoLoopDetector_LIBRARY})
+SET(StereoLoopDetector_INCLUDE_DIRS ${StereoLoopDetector_INCLUDE_DIR})
