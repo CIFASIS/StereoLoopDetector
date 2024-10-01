@@ -3,6 +3,9 @@
 Code for the article ["Addressing the challenges of loop detection in
 agricultural environments"](https://onlinelibrary.wiley.com/doi/10.1002/rob.22414), published in the Journal of Field Robotics in 2024.  
 A pre-print version can be found in arxiv.org: https://arxiv.org/abs/2408.15761
+An explanatory video can be found on YouTube: https://www.youtube.com/watch?v=DujsHfyyhNI
+
+[![YouTube](http://i.ytimg.com/vi/DujsHfyyhNI/hqdefault.jpg)](https://www.youtube.com/watch?v=DujsHfyyhNI)
 
 If you use this work in academic work please cite:
 
